@@ -51,8 +51,6 @@ const PuzzleGame: React.FC = () => {
         </div>
         <div className="w-96 h-96 grid gap-0.5 border-4 border-solid border-stone-400 bg-white shadow-md shadow-black grid-cols-4">
           {positions.map((pos, index) => {
-            console.log("==>  ", pos, index);
-
             const x = (pos % 4) * 100;
             const y = Math.floor(pos / 4) * 100;
             return (
