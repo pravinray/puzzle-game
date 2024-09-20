@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
+import { useGameContext } from "../contexts/GameProvider";
 
 interface TimerProps {
   onTimeUp: () => void;
 }
 
 const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
-  const [time, setTime] = useState<number>(160);
-
+  const seconds: number = 30;
+  const [time, setTime] = useState<any>();
+  const { isSolved } = useGameContext();
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setTime(prev => {
+      setTime((prev: number) => {
         if (prev <= 1) {
           clearInterval(timer);
           onTimeUp();
@@ -23,7 +25,22 @@ const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
     return () => clearInterval(timer);
   }, [onTimeUp]);
 
-  return <div className="text-center">Time Left: {time}s</div>;
+  useEffect(() => {
+    setTime(seconds);
+    isSolved ? stopTimer() : resetTimer();
+  }, [isSolved]);
+
+  const stopTimer = () => {
+    setTime("-");
+  };
+
+  const resetTimer = () => {
+    setTime(seconds);
+  };
+
+  return (
+    <>{!isSolved && <div className="text-center">Time Left: {time}s</div>}</>
+  );
 };
 
 export default Timer;
