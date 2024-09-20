@@ -5,9 +5,11 @@ interface GameContextType {
   gridSize: number;
   score: number;
   gameOver: boolean;
+  isSolved: boolean;
   setGridSize: (size: number) => void;
   setScore: (score: number) => void;
   setGameOver: (status: boolean) => void;
+  setIsSolved: (status: boolean) => void;
 }
 
 // Default values for context
@@ -17,11 +19,11 @@ interface GameProviderProps {
   children: ReactNode;
 }
 
-// Create the provider component
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [gridSize, setGridSize] = useState<number>(2);
   const [score, setScore] = useState<number>(0);
   const [gameOver, setGameOver] = useState<boolean>(false);
+  const [isSolved, setIsSolved] = useState<boolean>(false);
 
   return (
     <GameContext.Provider
@@ -29,9 +31,11 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
         gridSize,
         score,
         gameOver,
+        isSolved,
         setGridSize,
         setScore,
         setGameOver,
+        setIsSolved
       }}
     >
       {children}
@@ -39,7 +43,6 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   );
 };
 
-// Custom hook to use the GameContext
 export const useGameContext = (): GameContextType => {
   const context = useContext(GameContext);
   if (!context) {
