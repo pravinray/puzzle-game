@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useGameContext } from "../contexts/GameProvider";
 
 const PuzzleGame: React.FC = () => {
   const imgUrl =
     "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U";
 
   const [positions, setPositions] = useState<number[]>([...Array(16).keys()]);
+
+  const { isSolved, setIsSolved } = useGameContext();
 
   useEffect(() => {
     setPositions((prevPositions) => {
@@ -13,6 +16,11 @@ const PuzzleGame: React.FC = () => {
       return newPos;
     });
   }, []);
+
+  useEffect(() => {
+    const checkIfSolved = positions.every((pos, index) => pos === index);
+    setIsSolved(checkIfSolved);
+  }, [positions]);
 
   // Handling the start of a drag event
   const handleDragStart = (
@@ -40,8 +48,6 @@ const PuzzleGame: React.FC = () => {
   const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
-
-  const isSolved = positions.every((pos, index) => pos === index);
 
   return (
     <>
