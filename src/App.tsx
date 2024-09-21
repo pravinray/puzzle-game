@@ -17,12 +17,14 @@ const App: React.FC = () => {
       <h1 className="text-2xl font-bold mb-4">Puzzle Game</h1>
 
       <Auth />
+
       {!gameOver && (
         <>
           <Timer onTimeUp={handleGameOver} />
           <PuzzleGame />
         </>
       )}
+
       {gameOver && (
         <div className="text-red-600">
           Time Up!{" "}

@@ -23,7 +23,7 @@ const Timer: React.FC<TimerProps> = ({ onTimeUp }) => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [onTimeUp]);
+  }, []);
 
   useEffect(() => {
     setTime(seconds);
