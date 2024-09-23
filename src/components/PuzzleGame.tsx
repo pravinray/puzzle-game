@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useGameContext } from "../contexts/GameProvider";
+import ScoreWithTime from "./ScoreWithTime";
 
 const PuzzleGame: React.FC = () => {
+  // const scoreRef: any = useRef<HTMLDivElement | null>(null);
+
   const images: string[] = [
     "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U",
     "https://fastly.picsum.photos/id/17/2500/1667.jpg?hmac=HD-JrnNUZjFiP2UZQvWcKrgLoC_pc_ouUSWv8kHsJJY",
@@ -22,21 +25,22 @@ const PuzzleGame: React.FC = () => {
   ]);
 
   const [currentImage, setCurrentImage] = useState<string>("");
+  const [trigger, setTrigger] = useState<number>(0);
 
   const { isSolved, setIsSolved } = useGameContext();
 
   useEffect(() => {
+    selectRandomImageAndShufflePositions();
+  }, []);
+
+  const selectRandomImageAndShufflePositions = () => {
+    const imageIndex = Math.floor(Math.random() * images.length);
+    setCurrentImage(images[imageIndex]);
     setPositions((prevPositions) => {
       const newPos = [...prevPositions];
       newPos.sort(() => Math.random() - 0.5);
       return newPos;
     });
-    selectRandomImage();
-  }, []);
-
-  const selectRandomImage = () => {
-    const imageIndex = Math.floor(Math.random() * images.length);
-    setCurrentImage(images[imageIndex]);
   };
 
   useEffect(() => {
@@ -56,13 +60,16 @@ const PuzzleGame: React.FC = () => {
   const handleDrop = (e: React.DragEvent<HTMLDivElement>, position: number) => {
     e.preventDefault();
     const originalPosition: any = e.dataTransfer.getData("text");
-
     setPositions((prevPositions) => {
       const newPos = [...prevPositions];
       [newPos[originalPosition], newPos[position]] = [
         newPos[position],
         newPos[originalPosition],
       ];
+
+      if (newPos[position] !== position) {
+        setTrigger(trigger + 1);
+      }
       return newPos;
     });
   };
@@ -73,14 +80,19 @@ const PuzzleGame: React.FC = () => {
 
   return (
     <>
+      <ScoreWithTime
+        controlIncorrectMove={trigger}
+        randomImageAndShufflePositions={selectRandomImageAndShufflePositions}
+      />
       <div className="flex justify-center items-start gap-5">
         <div className="flex items-center justify-center border-4 border-solid border-stone-400 p-3 shadow-md">
           <img
             className="max-w-48 block"
             src={currentImage}
-            alt="Reference Image"
+            alt="Reference"
           />
         </div>
+
         <div
           className="w-96 h-96 grid gap-0.5 border-4 border-solid border-stone-400 bg-white shadow-md
          shadow-black"
