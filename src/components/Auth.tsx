@@ -5,6 +5,7 @@ const Auth: React.FC = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  // hashing password
   const hashPassword = (input: string): string => {
     return input.split("").reverse().join("");
   };
@@ -29,6 +30,7 @@ const Auth: React.FC = () => {
     }
   }, [isRegistering]);
 
+  // registering user
   const handleRegister = () => {
     const hashedPassword = hashPassword(password);
     const user = {
@@ -40,6 +42,7 @@ const Auth: React.FC = () => {
     alert("Registration successful!");
   };
 
+  // authenticate user
   const handleLogin = () => {
     const storedUser = sessionStorage.getItem("user");
     if (storedUser) {
