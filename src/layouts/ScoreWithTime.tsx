@@ -1,31 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useGameContext } from "../contexts/GameProvider";
+import { GameState, ScoreLevel, ScoreProps } from "../types/types";
+import { MAX_LEVEL, START_TIME } from "../constants/constants";
+import ImageGrid from "./ImageGrid";
 
-type ScoreLevel =
-  | "Excellent"
-  | "Good Job"
-  | "You Can Do Better"
-  | "Please Try Again";
-
-interface GameState {
-  level: number;
-  incorrectMoves: number;
-  timeLeft: number;
-  scoreLevel: ScoreLevel | null;
-  failuresInARow: number;
-}
-
-interface ScoreProps {
-  controlIncorrectMove: number;
-  randomImageAndShufflePositions: () => void;
-}
-
-const MAX_LEVEL = 10;
-const START_TIME = 300;
-
-const ScoreWithTime: React.FC<ScoreProps> = ({ controlIncorrectMove, randomImageAndShufflePositions }) => {
+const ScoreWithTime: React.FC<ScoreProps> = ({
+  controlIncorrectMove,
+  randomImageAndShufflePositions,
+}) => {
   const { isSolved } = useGameContext();
-
   const [gameState, setGameState] = useState<GameState>(() => {
     const savedGameState = localStorage.getItem("gameState");
     return savedGameState
@@ -86,8 +69,6 @@ const ScoreWithTime: React.FC<ScoreProps> = ({ controlIncorrectMove, randomImage
 
   // logic to handle incorrect moves
   const handleIncorrectMove = () => {
-    console.log("inside handle incorrect move");
-
     setGameState((prev) => ({
       ...prev,
       incorrectMoves: prev.incorrectMoves + 1,
@@ -137,9 +118,11 @@ const ScoreWithTime: React.FC<ScoreProps> = ({ controlIncorrectMove, randomImage
     }
   };
 
+  // const options = ["Option 1", "Option 2", "Option 3"];
+
   return (
-    <div>
-      <div className="container mx-auto p-4">
+    <div className="container inline-flex">
+      <div className="container mx-auto p-4 place-content-center">
         <h1 className="text-2xl font-bold text-center">Puzzle Game</h1>
         <div className="mt-4 flex flex-col items-center">
           <p className="text-lg">Level: {level}</p>
@@ -172,6 +155,9 @@ const ScoreWithTime: React.FC<ScoreProps> = ({ controlIncorrectMove, randomImage
             <p className="text-red-500">Game Over! Restarting...</p>
           </div>
         )}
+      </div>
+      <div className="content-center">
+        <ImageGrid />
       </div>
     </div>
   );
