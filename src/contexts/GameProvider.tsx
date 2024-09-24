@@ -1,17 +1,8 @@
 import React, { createContext, useState, useContext, ReactNode } from "react";
-
-// Context's data type
-interface GameContextType {
-  isSolved: boolean;  
-  setIsSolved: (status: boolean) => void;
-}
+import { GameContextType, GameProviderProps } from "../types/types";
 
 // Default values for context
 const GameContext = createContext<GameContextType | undefined>(undefined);
-
-interface GameProviderProps {
-  children: ReactNode;
-}
 
 export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [isSolved, setIsSolved] = useState<boolean>(false);
@@ -20,7 +11,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     <GameContext.Provider
       value={{
         isSolved,
-        setIsSolved
+        setIsSolved,
       }}
     >
       {children}
