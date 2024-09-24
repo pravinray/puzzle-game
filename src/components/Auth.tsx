@@ -69,6 +69,7 @@ const Auth: React.FC = () => {
   const handleLogout = () => {
     sessionStorage.removeItem("userSession");
     setIsLoggedIn(false);
+    sessionStorage.removeItem("currentGrid")
   };
 
   return (
@@ -139,7 +140,7 @@ const Auth: React.FC = () => {
           </form>
         </div>
       ) : (
-        <div className="float-right border-4 border-solid border-stone-400 p-3 shadow-md gap-6 mr-5">
+        <div className="container float-right border-4 border-solid border-stone-400 p-3 shadow-md gap-6 mr-5 w-min">
           <h2>Welcome, {user}!</h2>
           <button
             onClick={handleLogout}
