@@ -33,7 +33,7 @@ const ImageGrid: React.FC = () => {
         onClick={toggleDropdown}
         className="inline-flex justify-center w-full px-4 py-2 bg-blue-500 text-white text-sm font-medium rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
       >
-        {gridSize || "Select"}
+        {gridSize ? `${gridSize} * ${gridSize}` : "Select"}
       </button>
       {isOpen && (
         <div className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
@@ -51,7 +51,7 @@ const ImageGrid: React.FC = () => {
                 role=""
                 onClick={() => handleOptions(index)}
               >
-                {option}
+                {option} * {option}
               </a>
             ))}
           </div>
