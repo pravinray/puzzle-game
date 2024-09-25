@@ -28,10 +28,15 @@ type ScoreProps = {
   randomImageAndShufflePositions: () => void;
 };
 
+type PreviewProps = {
+  currentImage: string;
+};
+
 export type {
   GameContextType,
   GameProviderProps,
   ScoreLevel,
   GameState,
   ScoreProps,
+  PreviewProps,
 };

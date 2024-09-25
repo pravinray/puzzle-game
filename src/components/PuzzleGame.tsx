@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useGameContext } from "../contexts/GameProvider";
 import ScoreWithTime from "../layouts/ScoreWithTime";
 import { DEFAULT_GRID, IMAGES } from "../constants/constants";
+import PreviewIMage from "../layouts/PreviewImage";
 
 const PuzzleGame: React.FC = () => {
   // const scoreRef: any = useRef<HTMLDivElement | null>(null);
@@ -75,7 +76,7 @@ const PuzzleGame: React.FC = () => {
       />
       <div className="flex justify-center items-start gap-5">
         <div className="flex items-center justify-center border-4 border-solid border-stone-400 p-3 shadow-md">
-          <img className="max-w-48 block" src={currentImage} alt="Reference" />
+          <PreviewIMage currentImage={currentImage} />
         </div>
 
         <div
